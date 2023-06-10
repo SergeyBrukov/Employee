@@ -78,7 +78,6 @@ const TodoContainerByEmployee = () => {
 
     const queryObject = Object.fromEntries(searchParams1);
 
-
     const [searchTodoValue, setSearchTodoValue] = useState<string>(queryObject.searchEmployees ? String(queryObject.searchEmployees) : "")
     const [currentPage, setCurrentPage] = useState<string>(searchParams1.get("page") || "1")
     const [statusSearch, setStatusSearch] = useState<string>(queryObject.statusSearch ? String(queryObject.statusSearch) : "all");
@@ -91,11 +90,11 @@ const TodoContainerByEmployee = () => {
 
         if (queryObject?.searchTodoValue && (queryObject?.searchTodoValue !== searchTodoValue)) {
             setSearchTodoValue(String(queryObject.searchTodoValue))
-        } else if(queryObject?.searchTodoValue?.length === 0 ) {
+        } else if (queryObject?.searchTodoValue?.length === 0) {
             setSearchTodoValue("")
         }
 
-        if(queryObject?.statusSearch && (queryObject?.statusSearch !== statusSearch)) {
+        if (queryObject?.statusSearch && (queryObject?.statusSearch !== statusSearch)) {
             setStatusSearch(String(queryObject.statusSearch))
         }
     }
