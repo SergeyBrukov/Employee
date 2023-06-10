@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String     @id @default(uuid())
+  email           String
+  password        String
+  name            String
+  role            String     @default("OWNER")
+  createdEmployee Employee[]
+}
+
+model Employee {
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  password  String?
+  age       String
+  address   String
+  status    String  @default("invited")
+  user      User?   @relation(fields: [userId], references: [id])
+  userId    String?
+  todo      Todo[]
+  role      String  @default("EMPLOYEE")
+}
+
+model Todo {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  complete    Boolean   @default(false)
+  Employee    Employee? @relation(fields: [employeeId], references: [id])
+  employeeId  String?
+}
+
+model Message {
+  id               String        @id @default(uuid())
+  authorName       String
+  chatIdByEmployee String
+  messageValue     String
+  messageFiles     MessageFile[]
+  replaceMessageId String?
+  date             String
+}
+
+model MessageFile {
+  Message   Message? @relation(fields: [messageId], references: [id])
+  messageId String?
+  id        String   @id @default(uuid())
+  name      String
+  type      String
+  base64    String
+}
